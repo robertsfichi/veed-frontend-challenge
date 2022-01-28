@@ -12,17 +12,72 @@ html, body, #app {
   width: 100%;
 }
 
+p, h3 {
+  margin: 6px 0;
+}
+
+ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  margin-bottom: 20px;
+}
+
 .App {
   max-width: 1200px;
   margin: 0 auto;
   padding: 60px;
 }
 
-.ReposList__Container {
+.RepositoriesList {
   display: flex;
   flex-direction: column;
+  padding-left: 40px;
 }
 
-li {
-  margin-bottom: 20px;
+.RepositoriesList__Repo--NameAndStars {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
+
+.RepositoriesList__Repo--Name a {
+  margin: 0;
+}
+
+.RepositoriesList__Repo--Stars {
+  font-size: 14px;
+}
+
+.RepositoriesList__Repo--Date {
+  font-size: 13px;
+  font-weight: 700;
+  color:gray;
+  margin: 0;
+}
+
+.RepositoriesList__Repo--Description {
+  font-style: italic;
+  margin-bottom: 30px;
+}
+
+.NavBar__List {
+  display: flex;
+  list-style: none;
+}
+
+.NavBar__List--Item a {
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  color: gray;
+  margin-right: 10px;
+}
+
+.Icon {
+  height: 20px;
+  cursor: pointer;
+}
+
