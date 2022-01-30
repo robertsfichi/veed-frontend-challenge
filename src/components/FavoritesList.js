@@ -10,11 +10,11 @@ const FavoritesList = () => {
         setFavoriteRepositories(JSON.parse(locallyStoredFavorites));
     }, [locallyStoredFavorites]);
 
-    return <div className="RepositoriesList">
+    return <ol className="RepositoriesList">
         {favoriteRepositories ? favoriteRepositories.map((repo) => {
             const { name, url, description, stars, created_at } = repo;
 
-            return <div key={url}>
+            return <li key={url}>
                 {created_at ? <p className="RepositoriesList__Repo--Date">{formatDate(created_at)}</p> : null}
                 <div className="RepositoriesList__Repo--NameAndStars">
                     <a target="_blank" rel="noreferrer" href={url} className="RepositoriesList__Repo--Name">
@@ -24,9 +24,9 @@ const FavoritesList = () => {
                     <span>{stars} ⭐</span>
                 </div>
                 <p className="RepositoriesList__Repo--Description">{description ? description : 'No description provided.'}</p>
-            </div>;
+            </li>;
         }) : <p>You don't have any favorite repositories yet.</p>}
-    </div>;
+    </ol>;
 };
 
 export default FavoritesList;
