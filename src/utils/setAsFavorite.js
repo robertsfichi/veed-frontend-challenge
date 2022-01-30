@@ -5,7 +5,6 @@ const setAsFavorite = (favoriteRepositories, setFavoriteRepositories, name, url,
     // If there's no favorites list, create one and add currently selected repository to it
     if (!favoriteRepositories) {
         setFavoriteRepositories([{ name, url, description, stars, created_at }]);
-        localStorage.setItem('favoriteRepositories', JSON.stringify(favoriteRepositories));
 
         // If currently selected repository is not set as favorite, add it to the list
     } else if (!isFavorite(favoriteRepositories, url)) {
