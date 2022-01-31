@@ -15,38 +15,50 @@ const RepositoriesList = () => {
         selectedLanguage: 'All'
     });
 
+    // Fetch repositories & update them based on selected language
+    useEffect(() => {
+        let unmounted = false;
+
+        fetchRepos(repos.selectedLanguage).then(data => {
+            if (!unmounted) {
+                setRepos((prevState => {
+                    return {
+                        ...prevState,
+                        list: data.repos,
+                    };
+                }));
+            }
+        }).catch(() => {
+            setError({ text: 'Error fetching repositories based on language.' });
+        });
+
+        return () => unmounted = true;
+    }, [repos.selectedLanguage]);
+
+    // Get available programming languages
+    useEffect(() => {
+        let unmounted = false;
+
+        fetchRepos().then(data => {
+            if (!unmounted) {
+                setRepos((prevState => {
+                    return {
+                        ...prevState,
+                        availableLanguages: [...new Set(data.availableLanguages)]
+                    };
+                }));
+            }
+        }).catch(() => {
+            setError({ text: 'Error updating available languages.' });
+        });
+
+        return () => unmounted = true;
+    }, []);
+
     // Update local storage based on local state
     useEffect(() => {
         localStorage.setItem('favoriteRepositories', JSON.stringify(favoriteRepositories));
     }, [favoriteRepositories]);
-
-    // Get available programming languages and add them to state
-    useEffect(() => {
-        fetchRepos().then(data => {
-            setRepos((prevState => {
-                return {
-                    ...prevState,
-                    availableLanguages: [...new Set(data.availableLanguages)]
-                };
-            }));
-        }).catch(() => {
-            setError({ text: 'Error updating available languages.' });
-        });
-    }, []);
-
-    // Fetch repositories & update them based on selected language
-    useEffect(() => {
-        fetchRepos(repos.selectedLanguage).then(data => {
-            setRepos((prevState => {
-                return {
-                    ...prevState,
-                    list: data.repos,
-                };
-            }));
-        }).catch(() => {
-            setError({ text: 'Error fetching repositories based on language.' });
-        });
-    }, [repos.selectedLanguage]);
 
     const isLoading = () => {
         return !repos.list && error === null;
@@ -57,11 +69,9 @@ const RepositoriesList = () => {
 
         {isLoading() ? <h2>Loading...</h2> : null}
 
-        {error ? <p>{error.text}</p> : null}
-
-        {repos.list ?
-            repos.list.map((repo) => <RepositoryListItem repo={repo} favoriteRepositories={favoriteRepositories} setFavoriteRepositories={setFavoriteRepositories} />)
-            : null}
+        {error ? <p>{error.text}</p>
+            : repos.list ? repos.list.map((repo, i) => <RepositoryListItem repo={repo} favoriteRepositories={favoriteRepositories} setFavoriteRepositories={setFavoriteRepositories} key={i} index={i} />)
+                : null}
     </ol>;
 };
 
