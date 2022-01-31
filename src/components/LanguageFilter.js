@@ -9,9 +9,9 @@ const LanguageFilter = ({ repos, setRepos }) => {
             };
         });
     };
-    return <select onChange={(e) => handleChange(e)} value={repos.selectedLanguage}>
+    return <select onChange={(e) => handleChange(e)} value={repos.selectedLanguage} data-testid="language-filter">
         <option value="All">All languages</option>
-        {repos.availableLanguages && repos.availableLanguages.length > 1 && repos.availableLanguages.map(element => element ? <option value={element} key={element}>{element}</option> : null)}
+        {repos.availableLanguages && repos.availableLanguages.length > 1 && repos.availableLanguages.map((element, i) => element ? <option value={element} key={element} data-testid={`language-option-${i}`}>{element}</option> : null)}
     </select>;
 };
 
